@@ -16,9 +16,7 @@ import EasyNotificationBadge
 public typealias AZTabBarAction = (() -> Void)
 
 open class AZTabBarController: UIViewController {
-	
-	// static let horizontalPadding: CGFloat = 8
-	
+		
 	/*
 	*  MARK: - Static instance methods
 	*/
@@ -445,7 +443,7 @@ open class AZTabBarController: UIViewController {
 	
 	override open func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
 		let selectedButtonX: CGFloat = self.buttons[self.selectedIndex].frame.origin.x
-		self.selectionIndicatorLeadingConstraint.constant = selectedButtonX + AZTabBarController.horizontalPadding
+		self.selectionIndicatorLeadingConstraint.constant = selectedButtonX + getSelectionIndicatorLeadingSpace(at: self.selectedIndex)
 	}
 	
 	override open func viewSafeAreaInsetsDidChange() {
@@ -1070,7 +1068,7 @@ open class AZTabBarController: UIViewController {
 	
 	private func moveSelectionIndicator(toIndex index: Int,animated:Bool){
 		
-		if selectionIndicatorLeadingConstraint == nil{
+		if selectionIndicatorLeadingConstraint == nil {
 			return
 		}
 		
@@ -1080,7 +1078,7 @@ open class AZTabBarController: UIViewController {
 		self.buttonsContainer.layoutIfNeeded()
 		
 		let animations = {() -> Void in
-			self.selectionIndicatorLeadingConstraint.constant = constant + AZTabBarController.horizontalPadding
+			self.selectionIndicatorLeadingConstraint.constant = constant + self.getSelectionIndicatorLeadingSpace(at: index)
 			self.buttonsContainer.layoutIfNeeded()
 		}
 		
@@ -1090,6 +1088,12 @@ open class AZTabBarController: UIViewController {
 		else {
 			animations()
 		}
+	}
+	
+	private func getSelectionIndicatorLeadingSpace(at index: Int) -> CGFloat {
+		let buttonWidth = buttons[index].frame.size.width
+		let selectionIndicatorWidth = buttonWidth * self.selectionIndicatorWidth
+		return (buttonWidth - selectionIndicatorWidth) / 2.0
 	}
 }
 
@@ -1145,11 +1149,11 @@ fileprivate extension AZTabBarController {
 		buttonsStackView.topAnchor.constraint(equalTo: buttonsContainer.topAnchor).isActive = true
 	}
 	
-	func setupSelectionIndicatorConstraints(){
-		selectionIndicatorLeadingConstraint = selectionIndicator.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor, constant: AZTabBarController.horizontalPadding)
+	func setupSelectionIndicatorConstraints() {
+		selectionIndicatorLeadingConstraint = selectionIndicator.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor, constant: getSelectionIndicatorLeadingSpace(at: 0))
 		selectionIndicatorHeightConstraint = selectionIndicator.heightAnchor.constraint(equalToConstant: 3)
 		selectionIndicatorLeadingConstraint.isActive = true
-		selectionIndicator.widthAnchor.constraint(equalTo: buttons[0].widthAnchor, constant: -AZTabBarController.horizontalPadding).isActive = true
+		selectionIndicator.widthAnchor.constraint(equalTo: buttons[0].widthAnchor, multiplier: selectionIndicatorWidth).isActive = true
 		selectionIndicatorHeightConstraint.isActive = true
 		selectionIndicator.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor).isActive = true
 	}
