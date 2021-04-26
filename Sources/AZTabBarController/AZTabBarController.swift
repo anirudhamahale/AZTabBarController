@@ -130,6 +130,7 @@ open class AZTabBarController: UIViewController {
 		}
 	}
 	
+	/// The width percentage of the selection indicator with respect to the button. Allowed value is between 0.1 to 1.0.
 	open var selectionIndicatorWidth: CGFloat = 1.0
 	
 	/// Should the tab bar have animated transitions enabled?
