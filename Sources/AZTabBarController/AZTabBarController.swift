@@ -294,7 +294,7 @@ open class AZTabBarController: UIViewController {
 	*/
 	
 	/// Array which holds the controllers.
-	fileprivate var controllers: [UIViewController?]!
+	fileprivate (set) open var controllers: [UIViewController?]!
 	
 	/// Array which holds the actions.
 	fileprivate var actions: [AZTabBarAction?]!
