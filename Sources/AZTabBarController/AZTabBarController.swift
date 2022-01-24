@@ -209,6 +209,14 @@ open class AZTabBarController: UIViewController {
 		if selectedIndex >= 0,selectedIndex < tabCount, let controller = controllers[selectedIndex] { return controller }
 		return nil
 	}
+  
+  /// Returns the current controller if exists.
+  public var currentTabItem: UIView? {
+    if selectedIndex >= 0, selectedIndex < tabCount {
+      return buttons[selectedIndex]
+    }
+    return nil
+  }
 	
 	/// The duration that is needed to invoke a long click.
 	open var longClickTriggerDuration: TimeInterval = 0.5
