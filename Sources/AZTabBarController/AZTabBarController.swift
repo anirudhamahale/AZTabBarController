@@ -239,7 +239,14 @@ open class AZTabBarController: UIViewController {
 	/// The AZTabBar Delegate
 	open weak var delegate: AZTabBarDelegate?
 	
-	
+  /// Returns true if Tab bar is visible
+  public var isVisible: Bool {
+    if let buttonsContainerHeightConstraint = buttonsContainerHeightConstraint {
+      return buttonsContainerHeightConstraint.constant != 0.0
+    }
+    return false
+  }
+  
 	/*
 	* MARK: - Internal Properties
 	*/
