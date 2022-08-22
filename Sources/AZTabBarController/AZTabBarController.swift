@@ -272,7 +272,7 @@ open class AZTabBarController: UIViewController {
 	fileprivate (set) public var controllersContainer:UIView!
 	
 	/// The view that holds the stack and selection indicator
-	fileprivate (set) public var buttonsContainer:UIView!
+	private(set) var buttonsContainer:UIView!
 	
 	/// The stack view that holds the buttons
 	fileprivate var buttonsStackView: UIStackView!
